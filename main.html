@@ -1,0 +1,90 @@
+<script>
+    let months = {
+        'jan' : 31,
+        'feb' : 28,
+        'mar' : 31,
+        'apr' : 30,
+        'may' : 31,
+        'jun' : 31,
+        'jul' : 30,
+        'aug' : 31,
+        'sep' : 30,
+        'oct' : 31,
+        'nov' : 30,
+        'dec' : 31,
+    };
+
+    let fullMonthName = {
+        'jan' : 'January',
+        'feb' : 'February',
+        'mar' : 'March',
+        'apr' : 'April',
+        'may' : 'May',
+        'jun' : 'June',
+        'jul' : 'July',
+        'aug' : 'August',
+        'sep' : 'September',
+        'oct' : 'October',
+        'nov' : 'November',
+        'dec' : 'December',
+    }
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="header">
+        <span id="currMonth">Currently Viewing: </span>
+        <script>
+        let month = 'jan';
+        document.getElementById('currMonth').innerHTML += fullMonthName[month];</script>
+        <span id="headerMonth">Months</span>
+        </div>
+       
+    </div>
+    <table class="cal">
+        <tr id="week"><th>Sunday</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th><th>Saturday</th></tr>
+        <tr id="row1"></tr>
+        <tr id="row2"></tr>
+        <tr id="row3"></tr>
+        <tr id="row4"></tr>
+        <tr id="row5"></tr>
+            <script>
+                    let row = 1;
+                    let tr = document.getElementById("row1");
+
+                    for (let i = 1; i <= months[month]; i++) {
+                        let tr = document.getElementById(`row${row}`);
+                        if (i % 7 == 0) {
+                            row++;
+                        }
+                        let td = document.createElement("td");
+                        td.id = `day${i}`;
+                        td.innerHTML = `<td><p>${i}</p> <input type="checkbox"></input></td>`;
+                        tr.appendChild(td);
+                    }
+            </script>
+    </table>
+
+    <div class="popup">
+        <span id="close"> &times</span>
+    </div>
+</body>
+</html>
+
+<script>
+    $('td').on("click", function() {
+        $(".popup").css("display", "block");
+    });
+
+    $("#close").on("click", function() {
+        $(".popup").css("display", "none");
+    });
+</script>

@@ -1,0 +1,77 @@
+body {
+    margin: 0px;
+}
+
+.cal  {
+    border: 2px solid black;
+    position: fixed;
+}
+
+th {
+    height: 40px;
+    padding-bottom:0px;
+    position: relative;
+    bottom: -10px;
+}
+
+td {
+    border: 2px solid black;
+    width: 70px;
+    height: 70px;
+    position: relative;
+}
+
+p {
+    position: absolute;
+    top: -15px;
+    left: 3px;
+}
+
+input {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 20px;
+    height: 20px;
+    accent-color:rgb(0, 255, 0);
+}
+
+.popup {
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background-color: bisque;
+    display: none;
+}
+
+#close {
+    position: relative;
+    font-size: 40px;
+    bottom: 0%;
+    left: 94%;
+    cursor: pointer;
+}
+
+.header {
+    width: 100%;
+    background-color: aquamarine;
+    margin: 0px;
+    margin-bottom: 10px;
+    padding: 5px;
+    font-weight: bold;
+    display: flex;
+}
+
+#headerMonth {
+    padding-right: 10px;
+    text-align: right;
+}
+
+#currMonth {
+    text-align: center;
+    flex: 1;
+}
