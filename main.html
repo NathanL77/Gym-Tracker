@@ -13,7 +13,6 @@
         'nov' : 30,
         'dec' : 31,
     };
-
     let fullMonthName = {
         'jan' : 'January',
         'feb' : 'February',
@@ -37,15 +36,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="main.css">
+    <script src="calEvents.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="header">
-        <span id="currMonth">Currently Viewing: </span>
+        <span id="currMonth"></span>
+        
+        <span id="headerMonth"><select id="monthOption">
+            <option value="jan">January</option>
+            <option value="feb">February</option>
+            <option value="mar">March</option>
+            <option value="apr">April</option>
+            <option value="may">May</option>
+            <option value="jun">June</option>
+            <option value="jul">July</option>
+            <option value="aug">August</option>
+            <option value="sep">September</option>
+            <option value="oct">October</option>
+            <option value="nov">November</option>
+            <option value="dec">December</option>
+        </select></span>
+
         <script>
-        let month = 'jan';
-        document.getElementById('currMonth').innerHTML += fullMonthName[month];</script>
-        <span id="headerMonth">Months</span>
+            let selectedMonth = document.getElementById('monthOption');
+
+            let month = selectedMonth.options[selectedMonth.selectedIndex].value;
+            document.getElementById('currMonth').innerHTML = `Currently Viewing: ${fullMonthName[month]}`;
+            </script>
         </div>
        
     </div>
@@ -67,24 +85,43 @@
                         }
                         let td = document.createElement("td");
                         td.id = `day${i}`;
-                        td.innerHTML = `<td><p>${i}</p> <input type="checkbox"></input></td>`;
+                        td.innerHTML = `<td><p>${i}</p> <input type="checkbox" id="check"></input></td>`;
                         tr.appendChild(td);
                     }
             </script>
     </table>
 
     <div class="popup">
+        <span id="dayTitle"></span>
         <span id="close"> &times</span>
+        <div id="info"></div>
     </div>
 </body>
 </html>
 
 <script>
-    $('td').on("click", function() {
-        $(".popup").css("display", "block");
+    $('td').on("click", function(e) {
+        if (!$(event.target).is('input')) {
+            $(".popup").css("display", "block");
+            let clickedDay = $(this).find('p').text();
+            document.getElementById('dayTitle').innerHTML = fullMonthName[month] + " " + clickedDay;
+        }
     });
 
     $("#close").on("click", function() {
         $(".popup").css("display", "none");
+    });
+
+    let btn = document.createElement("input");
+    btn.setAttribute("type", "button");
+    btn.setAttribute("id", "addBtn");
+    btn.setAttribute("value", "+");
+    document.querySelector('.popup').append(btn);
+
+    btn.addEventListener("click", function() {
+        let record = document.createElement("input");
+        record.setAttribute("type", "number");
+        record.setAttribute("id", "record");
+        document.querySelector('#info').append(record);
     });
 </script>
