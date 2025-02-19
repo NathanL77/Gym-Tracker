@@ -49,6 +49,7 @@ p {
     height: 80%;
     background-color: bisque;
     display: none;
+    border: 2px solid black;
 }
 
 #close {
