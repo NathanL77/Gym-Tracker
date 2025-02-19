@@ -36,7 +36,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="main.css">
-    <script src="calEvents.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -58,15 +57,9 @@
             <option value="dec">December</option>
         </select></span>
 
-        <script>
-            let selectedMonth = document.getElementById('monthOption');
-
-            let month = selectedMonth.options[selectedMonth.selectedIndex].value;
-            document.getElementById('currMonth').innerHTML = `Currently Viewing: ${fullMonthName[month]}`;
-            </script>
-        </div>
-       
+        </div>       
     </div>
+
     <table class="cal">
         <tr id="week"><th>Sunday</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th><th>Saturday</th></tr>
         <tr id="row1"></tr>
@@ -74,20 +67,26 @@
         <tr id="row3"></tr>
         <tr id="row4"></tr>
         <tr id="row5"></tr>
-            <script>
-                    let row = 1;
-                    let tr = document.getElementById("row1");
 
-                    for (let i = 1; i <= months[month]; i++) {
-                        let tr = document.getElementById(`row${row}`);
-                        if (i % 7 == 0) {
-                            row++;
-                        }
-                        let td = document.createElement("td");
-                        td.id = `day${i}`;
-                        td.innerHTML = `<td><p>${i}</p> <input type="checkbox" id="check"></input></td>`;
-                        tr.appendChild(td);
+            <script>
+                function generateTable(month) { //Generates table based on month
+                    for (let i = 1; i <= 5; i++) {
+                        document.getElementById(`row${i}`).innerHTML = '';  // Clear each row
                     }
+
+                    let row = 1;
+
+                        for (let i = 1; i <= months[month]; i++) {
+                            let tr = document.getElementById(`row${row}`);
+                            if (i % 7 == 0) {
+                                row++;
+                            }
+                            let td = document.createElement("td");
+                            td.id = `day${i}`;
+                            td.innerHTML = `<td><p>${i}</p> <input type="checkbox" id="check"></input></td>`;
+                            tr.appendChild(td);
+                        }    
+                }
             </script>
     </table>
 
@@ -96,11 +95,16 @@
         <span id="close"> &times</span>
         <div id="info"></div>
     </div>
+
 </body>
 </html>
 
 <script>
-    $('td').on("click", function(e) {
+    month = 'jan';
+    document.getElementById('currMonth').innerHTML = `Currently Viewing: ${fullMonthName[month]}`;
+    generateTable(month); 
+
+    $(document).on("click", "td", function(e) { //Day info popup on click
         if (!$(event.target).is('input')) {
             $(".popup").css("display", "block");
             let clickedDay = $(this).find('p').text();
@@ -108,7 +112,7 @@
         }
     });
 
-    $("#close").on("click", function() {
+    $("#close").on("click", function() { //Day info close button
         $(".popup").css("display", "none");
     });
 
@@ -118,10 +122,17 @@
     btn.setAttribute("value", "+");
     document.querySelector('.popup').append(btn);
 
-    btn.addEventListener("click", function() {
+    btn.addEventListener("click", function() { //Add button inside day info
         let record = document.createElement("input");
         record.setAttribute("type", "number");
         record.setAttribute("id", "record");
         document.querySelector('#info').append(record);
+    });
+    
+    let selectedMonth = document.getElementById('monthOption');
+    selectedMonth.addEventListener("change", function() {
+        month = selectedMonth.options[selectedMonth.selectedIndex].value;
+        document.getElementById('currMonth').innerHTML = `Currently Viewing: ${fullMonthName[month]}`;
+        generateTable(month);
     });
 </script>
